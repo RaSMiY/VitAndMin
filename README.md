@@ -1,5 +1,5 @@
 # VitAdnMin
 
-Compose your day menu. Check compatibility of vitamns and minerals.
+Compose your day menu. Check compatibility of vitamins and minerals.
 
 GPLv3
