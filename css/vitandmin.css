@@ -149,7 +149,7 @@ button {
 
 .handle { /* handle for moving element */
 	position: absolute;
-	padding: 0 3vmin 3vmin 1vmin;
+	padding: 0 20% 20% 1vmin;
 	top: 0;
 	left: 0;
 	cursor: move;
@@ -483,4 +483,24 @@ button.support {
 		font-size-adjust: 0.5;
 		line-height: 100%;
 	}
+}
+
+@media only screen and (max-height: 600px) and (orientation: landscape) {
+	.carousel-horizontal{
+		height: 26vh; 
+	}
+	.carousel-horizontal li {
+		width: 24vh;
+	}
+	.carousel-horizontal li p {
+		top: 9.5vmax;
+	}
+	button.conflict, button.support {
+		top: 8.5vmax;
+	}
+	.carousel-horizontal li img {
+		margin: 2vh 3vh 0 5vh;
+		width: 14vh;
+	}
+
 }
