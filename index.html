@@ -162,8 +162,8 @@ This file is part of VitAndMin project.
       </div>
      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Найти">
+    <form class="form-inline my-2 my-lg-0" onSubmit="poisk()">
+      <input id="find" class="form-control mr-sm-2" type="text" placeholder="Найти">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
     </form>
      </div>
@@ -182,7 +182,7 @@ This file is part of VitAndMin project.
         window.AED_SHOW({wid: '4680196',shortkey:'QzBeme2', size:bannerSize, custom:{}});
        } else {
           window.AED_ONLOAD = window.AED_ONLOAD || [];
-          window.AED_ONLOAD.push({wid:'4680196',shortkey:'QzBeme2',size:'728x90',custom:{}});
+          window.AED_ONLOAD.push({wid:'4680196',shortkey:'QzBeme2',size:bannerSize,custom:{}});
           if (!document.getElementById("ae-ad-script-$")) {
            var s = document.createElement("script"),
            h = document.getElementsByTagName("head")[0];
