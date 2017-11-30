@@ -44,16 +44,9 @@ This file is part of VitAndMin project.
 
 
 /* ====================блок настроек рекламных контэйнеров=================================*/
-/*
-#advertisment-bottom>div>div {
-	position: relative;
+#advertisment-bottom>div>div, #advertisment-top>div>div {
+	display: grid;
 }
-#advertisment-bottom>div>div>div {
-	position: absolute;
-	top: -45px;
-	left: calc((100% - 720px) / 2);
-}
-*/
 .advertisment div {
 	text-align: center;
 }
@@ -61,7 +54,7 @@ This file is part of VitAndMin project.
 	border: 1px solid black; border-radius: 5px;
 	margin: 0.2em;
 }
-#profport img {
+.profport>a>img {
 	width: 100%;
 }
 /* ====================конец блока настроек рекламных контэйнеров===========================*/
@@ -75,7 +68,7 @@ div {text-align: justify;}
 #supper {}
 #vitandmins {}
 #description, #information, #advertisment-description, #articles, #for-smartphones {text-align: justify; clear: both; display: none; padding: 1em;}
-#description img {float: right; width: 10em; height: 10em;}
+#description>div>img {float: right; width: 10em; height: 10em;}
 #articles {
 	padding: 1em;
 }
