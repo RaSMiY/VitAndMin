@@ -890,49 +890,16 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
  * This function clears highlights made earlier
  */
 function clearHighlight() {
-  // find all occurences of the search term in the given text,
-  // and add some "highlight" tags to them (we're not using a
-  // regular expression search, because we want to filter out
-  // matches that occur within HTML tags and script blocks, so
-  // we have to do a little extra validation)
-  var bodyText = document.getElementById('description').innerHTML;
+  // remove all <font> tags from text
+  // 
+  // 
+  // 
+  // 
  
-  var newText = "";
-  var i = -1;
-  var lcSearchTerm =  "<font style='color:Black; background-color:Yellow;'>";
-  var lcBodyText = bodyText.toLowerCase();
-    
-  while (bodyText.length > 0) {
-    i = lcBodyText.indexOf(lcSearchTerm, i+1);
-    if (i < 0) {
-      newText += bodyText;
-      bodyText = "";
-    } else {
-          bodyText = bodyText.substr(i + searchTerm.length);
-          lcBodyText = bodyText.toLowerCase();
-          i = -1;
-        }
-   }
-  
-  BodyText = newText;
-  newText = "";
-  i = -1;
-  lcSearchTerm =  "</font>";
-  lcBodyText = bodyText.toLowerCase();
-   
-  while (bodyText.length > 0) {
-    i = lcBodyText.indexOf(lcSearchTerm, i+1);
-    if (i < 0) {
-      newText += bodyText;
-      bodyText = "";
-    } else {
-          bodyText = bodyText.substr(i + searchTerm.length);
-          lcBodyText = bodyText.toLowerCase();
-          i = -1;
-        }
-   }
-    
-   document.getElementById('description').innerHTML = newText;
+//  $('font')
+  descriptionHtml = document.getElementById("description").innerHTML;
+// xmlhttp.responseText.replace(/<font[^>]+>/g,'');
+  document.getElementById("description").innerHTML = descriptionHtml.replace(/(<.?font[^>]+>)/g,'');
 }
 
 
@@ -962,12 +929,14 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
     return false;
   }
   
-  var bodyText = document.body.innerHTML;
+  var bodyText = document.getElementById('description').innerHTML;
+//  var bodyText = document.body.innerHTML;
   for (var i = 0; i < searchArray.length; i++) {
     bodyText = doHighlight(bodyText, searchArray[i], highlightStartTag, highlightEndTag);
   }
   
-  document.body.innerHTML = bodyText;
+  document.getElementById('description').innerHTML = bodyText;
+//  document.body.innerHTML = bodyText;
   return true;
 }
 
