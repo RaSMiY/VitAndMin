@@ -889,7 +889,7 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
 /*
  * This function clears highlights made earlier
  */
-function clearHighlight () {
+function clearHighlight() {
   // find all occurences of the search term in the given text,
   // and add some "highlight" tags to them (we're not using a
   // regular expression search, because we want to filter out
@@ -1079,13 +1079,62 @@ function poisk() {
 	textColor = 'Black';
 	bgColor = 'Yellow';
 
-//  clearHighlight();  
+  clearHighlight();  
   searchPrompt(searchedText, true, textColor, bgColor);
 // });
 }
 //=================================поиск по тексту==================================
 
-//==================================Пусковая функция===================================
+//==============================Получение координат элемента========================
+function getCoords(elem) {
+  // (1)
+  var box = elem.getBoundingClientRect();
+
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  // (2)
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  // (3)
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  // (4)
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+    top: top,
+    left: left
+  };
+}
+function getScroll(elem) {
+  // (1)
+  var box = elem.getBoundingClientRect();
+
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  // (2)
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  // (3)
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  // (4)
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+    scrollTop: scrollTop,
+    scrollLeft: scrollLeft
+  };
+}
+///==================================Пусковая функция===================================
 function init() {
 // $('[data-toggle="popover"]').popover();   
  
@@ -1129,8 +1178,20 @@ function init() {
    .on('remove', function(el, container, source) {
     checkCompatibility(source.id);
    })
-   .on('drag', function(el, source) {/*$('.roww').toggleClass('lock-screen')*/}) //попытка заблокировать прокрутку во время перетаскиваний
-   .on('dragend', function(el) {/*$('.roww').toggleClass('lock-screen')*/});
+   .on('drag', function(el, source) {
+    /*console.log(getScroll(el).scrollTop, getScroll(el).scrollLeft); /*console.log($('body').css('top')); */ 
+    /*sT = getScroll(document.getElementById('kitchen')).scrollTop;
+    $('#kitchen').toggleClass('lock-screen').css('top', 0 - sT); console.log('lock set', sT);*/
+    $(window).data('scrollTop', $(window).scrollTop());
+    $(window).scroll(function(){
+     $(window).scrollTop($(window).data('scrollTop'));
+    });    
+   }) //попытка заблокировать прокрутку во время перетаскиваний
+   .on('dragend', function(el) {
+    $(window).off('scroll'); 
+    $(window).removeData('scrollTop');
+    /*$('#kitchen').toggleClass('lock-screen').css('top', '');*/
+   });
 // }, 10000); // конец функции установки задержки
 
 // fillContent();
