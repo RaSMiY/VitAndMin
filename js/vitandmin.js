@@ -1151,14 +1151,14 @@ function init() {
     /*console.log(getScroll(el).scrollTop, getScroll(el).scrollLeft); /*console.log($('body').css('top')); */ 
     /*sT = getScroll(document.getElementById('kitchen')).scrollTop;
     $('#kitchen').toggleClass('lock-screen').css('top', 0 - sT); console.log('lock set', sT);*/
-    $(window).data('scrollTop', $(window).scrollTop());
+    $(window).data('scroll', {top: $(window).scrollTop(), left: $(window).scrollLeft()});
     $(window).scroll(function(){
-     $(window).scrollTop($(window).data('scrollTop'));
+     $(window).scrollTop($(window).data('scroll').top).scrollLeft($(window).data('scroll').left);
     });    
    }) //попытка заблокировать прокрутку во время перетаскиваний
    .on('dragend', function(el) {
     $(window).off('scroll'); 
-    $(window).removeData('scrollTop');
+    $(window).removeData('scroll');
     /*$('#kitchen').toggleClass('lock-screen').css('top', '');*/
    });
 // }, 10000); // конец функции установки задержки
