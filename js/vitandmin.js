@@ -1167,9 +1167,13 @@ function init() {
  
   // Готовим капчу
   document.getElementById('contact-form').addEventListener('submit', function(event) {
-		alert('Сообщение отправлено');
-		// console.log('submitted');
-		event.preventDefault();
+		let phone = document.getElementById('simple_form-field-phone').value;
+		if (phone != '') {
+		 event.preventDefault();
+		} else {
+ 		 alert('Сообщение отправлено');
+ 		}
+		// console.log('submitted', phone);
 	});
 
  $(window).resize(function(){

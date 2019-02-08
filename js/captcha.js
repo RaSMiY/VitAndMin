@@ -218,7 +218,7 @@ var BaseCaptcha = function (_Captcha) {
 			this.input.value = '';
 			this.resetStyling();
 			this.resetClassNames();
-			console.log('resseted');
+			// console.log('resetted');
 		}
 
 		//Methods
