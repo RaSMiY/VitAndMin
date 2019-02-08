@@ -1165,6 +1165,13 @@ function init() {
 
 // fillContent();
  
+  // Готовим капчу
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+		alert('Сообщение отправлено');
+		// console.log('submitted');
+		event.preventDefault();
+	});
+
  $(window).resize(function(){
 //  console.log('resize', $('#vitandmins').prev().css('height'));
 //  $('#vitandmins').css('height',  'calc('+$('.colmd11').css('height')+' - 3em)');

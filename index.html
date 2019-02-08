@@ -15,11 +15,12 @@
   <link rel="stylesheet" type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css' />
   <link rel="stylesheet" type="text/css" href="css/Fixed-Header-Table.css" media="all" />
   <link rel="stylesheet" type="text/css" href="css/ya-search.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="css/captcha.css" media="all" />
   <link rel="stylesheet" type="text/css" href="css/vitandmin.css" media="all" />
 
   <script type="text/javascript">
    window.onerror = function (msg, url, num) {
-    alert(msg + ';' + url + ';' + num);
+    alert('Ошибка: ' + msg + ';\n' + 'Область: ' + url + ';\n' + 'Позиция: ' + num);
     return true;
    }
   </script>
@@ -315,7 +316,7 @@ This file is part of VitAndMin project.
   <div id="advertisment-description" style="display: none;"></div>
   <div id="contact-us" style="display: none;">
    <div class="container-fluid">
-    <form class="form-horizontal" action="https://getsimpleform.com/messages?form_api_token=2d86d626a4d317ac3a539fcdbe78181d" method="post">
+    <form class="form-horizontal" action="https://getsimpleform.com/messages?form_api_token=2d86d626a4d317ac3a539fcdbe78181d" method="post" id="contact-form">
      <div class="form-group">
       <!-- the redirect_to is optional, the form will redirect to the referrer on submission -->
       <input type='hidden' name='redirect_to' value='http://vitandmin.su' />
@@ -335,7 +336,7 @@ This file is part of VitAndMin project.
       </div>
      </div>
 
-     <div class="form-group">
+     <div class="form-group" hidden>
       <label class="control-label" for="simple_form-field-phone"></label>
       <div class="col-md-12">
        <input type="text" id="simple_form-field-phone" name="phone" class="form-control" placeholder="Номер телефона" value=""  />
@@ -349,9 +350,10 @@ This file is part of VitAndMin project.
       </div>
      </div>
 
+     <div class="captcha-base"></div>
+
      <div class="form-group">
       <div class="col-md-offset-2 col-md-10">
-       <br />
        <button id="simple_form-field-submit" name="submit" class="btn btn-warning">Отправить <span></span></button>
       </div>
      </div>
@@ -397,6 +399,8 @@ This file is part of VitAndMin project.
 <!-- Local scripts -->
   <script type="text/javascript" src="js/jquery.fixedheadertable.min.js"></script>
   <script type="text/javascript" src="js/vitandmin.js"></script>
+ 	<script src="js/captcha.js"></script>
+
 
 <!-- VK Widgets-->
   <div id="vk_community_messages" style="display: none;"></div>
@@ -433,7 +437,7 @@ This file is part of VitAndMin project.
    enable_page_level_ads: true
     });
   </script>
-  
+ 
   <script>
    document.addEventListener("DOMContentLoaded", init);
 //   document.addEventListener("load", init);
