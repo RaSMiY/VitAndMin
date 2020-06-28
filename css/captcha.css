@@ -1,18 +1,18 @@
 .captcha-base {
-	margin: .5rem 1rem;
+	margin: 5px 0;
 }
 .captcha-base__reset {
-	margin: 0 1rem .5rem 1rem ;
+	margin-bottom: 5px;
 	background-color: #4c45e4;
 	color: #ffffff;
 	font-weight: bold;
-	font-size: 1.3rem;
+	font-size: 19px;
 	border: none;
 	cursor: pointer;
-	padding: .3rem .7rem;
+	padding: 2px 7px;
 }
 .captcha-base__input {
-	margin: 0 1rem .5rem 1rem ;
-	height: 2rem;
-	padding: .5rem 1rem;
+	margin-bottom: 5px;
+	height: 30px;
+	padding: 0 10px;
 }

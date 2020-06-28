@@ -11,6 +11,8 @@
   <!--meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
   <meta name="viewport" content="width=device-width, initial-scale=0.7, shrink-to-fit=yes">
 
+	<meta name="yandex-verification" content="522644f368f7e8f5" />
+  
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css' />
   <link rel="stylesheet" type="text/css" href="css/Fixed-Header-Table.css" media="all" />
@@ -20,7 +22,7 @@
 
   <script type="text/javascript">
    window.onerror = function (msg, url, num) {
-    alert('Ошибка: ' + msg + ';\n' + 'Область: ' + url + ';\n' + 'Позиция: ' + num);
+    alert(msg + ';' + url + ';' + num);
     return true;
    }
   </script>
@@ -339,7 +341,7 @@ This file is part of VitAndMin project.
      <div class="form-group" hidden>
       <label class="control-label" for="simple_form-field-phone"></label>
       <div class="col-md-12">
-       <input type="text" id="simple_form-field-phone" name="phone" class="form-control" placeholder="Номер телефона" value="" />
+       <input type="hidden" id="simple_form-field-phone" name="phone" class="form-control" placeholder="Номер телефона" value=""  />
       </div>
      </div>
 
@@ -349,7 +351,7 @@ This file is part of VitAndMin project.
        <textarea id="simple_form-field-content" rows="10"  name="content" class="form-control input-lg" placeholder="Ваше сообщение" required="required"></textarea>
       </div>
      </div>
-
+       
      <div class="captcha-base"></div>
 
      <div class="form-group">
