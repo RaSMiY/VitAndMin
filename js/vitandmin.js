@@ -890,49 +890,16 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
  * This function clears highlights made earlier
  */
 function clearHighlight() {
-  // find all occurences of the search term in the given text,
-  // and add some "highlight" tags to them (we're not using a
-  // regular expression search, because we want to filter out
-  // matches that occur within HTML tags and script blocks, so
-  // we have to do a little extra validation)
-  var bodyText = document.getElementById('description').innerHTML;
+  // remove all <font> tags from text
+  // 
+  // 
+  // 
+  // 
  
-  var newText = "";
-  var i = -1;
-  var lcSearchTerm =  "<font style='color:Black; background-color:Yellow;'>";
-  var lcBodyText = bodyText.toLowerCase();
-    
-  while (bodyText.length > 0) {
-    i = lcBodyText.indexOf(lcSearchTerm, i+1);
-    if (i < 0) {
-      newText += bodyText;
-      bodyText = "";
-    } else {
-          bodyText = bodyText.substr(i + searchTerm.length);
-          lcBodyText = bodyText.toLowerCase();
-          i = -1;
-        }
-   }
-  
-  BodyText = newText;
-  newText = "";
-  i = -1;
-  lcSearchTerm =  "</font>";
-  lcBodyText = bodyText.toLowerCase();
-   
-  while (bodyText.length > 0) {
-    i = lcBodyText.indexOf(lcSearchTerm, i+1);
-    if (i < 0) {
-      newText += bodyText;
-      bodyText = "";
-    } else {
-          bodyText = bodyText.substr(i + searchTerm.length);
-          lcBodyText = bodyText.toLowerCase();
-          i = -1;
-        }
-   }
-    
-   document.getElementById('description').innerHTML = newText;
+//  $('font')
+  descriptionHtml = document.getElementById("description").innerHTML;
+// xmlhttp.responseText.replace(/<font[^>]+>/g,'');
+  document.getElementById("description").innerHTML = descriptionHtml.replace(/(<.?font[^>]+>)/g,'');
 }
 
 
@@ -962,12 +929,14 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
     return false;
   }
   
-  var bodyText = document.body.innerHTML;
+  var bodyText = document.getElementById('description').innerHTML;
+//  var bodyText = document.body.innerHTML;
   for (var i = 0; i < searchArray.length; i++) {
     bodyText = doHighlight(bodyText, searchArray[i], highlightStartTag, highlightEndTag);
   }
   
-  document.body.innerHTML = bodyText;
+  document.getElementById('description').innerHTML = bodyText;
+//  document.body.innerHTML = bodyText;
   return true;
 }
 
@@ -1085,7 +1054,56 @@ function poisk() {
 }
 //=================================поиск по тексту==================================
 
-//==================================Пусковая функция===================================
+//==============================Получение координат элемента========================
+function getCoords(elem) {
+  // (1)
+  var box = elem.getBoundingClientRect();
+
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  // (2)
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  // (3)
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  // (4)
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+    top: top,
+    left: left
+  };
+}
+function getScroll(elem) {
+  // (1)
+  var box = elem.getBoundingClientRect();
+
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  // (2)
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  // (3)
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  // (4)
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+    scrollTop: scrollTop,
+    scrollLeft: scrollLeft
+  };
+}
+///==================================Пусковая функция===================================
 function init() {
 // $('[data-toggle="popover"]').popover();   
  
@@ -1129,17 +1147,33 @@ function init() {
    .on('remove', function(el, container, source) {
     checkCompatibility(source.id);
    })
-   .on('drag', function(el, source) {/*$('.roww').toggleClass('lock-screen')*/}) //попытка заблокировать прокрутку во время перетаскиваний
-   .on('dragend', function(el) {/*$('.roww').toggleClass('lock-screen')*/});
+   .on('drag', function(el, source) {
+    /*console.log(getScroll(el).scrollTop, getScroll(el).scrollLeft); /*console.log($('body').css('top')); */ 
+    /*sT = getScroll(document.getElementById('kitchen')).scrollTop;
+    $('#kitchen').toggleClass('lock-screen').css('top', 0 - sT); console.log('lock set', sT);*/
+    $(window).data('scroll', {top: $(window).scrollTop(), left: $(window).scrollLeft()});
+    $(window).scroll(function(){
+     $(window).scrollTop($(window).data('scroll').top).scrollLeft($(window).data('scroll').left);
+    });    
+   }) //попытка заблокировать прокрутку во время перетаскиваний
+   .on('dragend', function(el) {
+    $(window).off('scroll'); 
+    $(window).removeData('scroll');
+    /*$('#kitchen').toggleClass('lock-screen').css('top', '');*/
+   });
 // }, 10000); // конец функции установки задержки
 
 // fillContent();
-
+ 
   // Готовим капчу
   document.getElementById('contact-form').addEventListener('submit', function(event) {
-		alert('Сообщение отправлено');
-		// console.log('submitted');
-		event.preventDefault();
+		let phone = document.getElementById('simple_form-field-phone').value;
+		if (phone != '') {
+		 event.preventDefault();
+		} else {
+ 		 alert('Сообщение отправлено');
+ 		}
+		// console.log('submitted', phone);
 	});
 
  $(window).resize(function(){
